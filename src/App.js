@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import Map from './Map';
+import LocationList from './LocationList';
 import './App.css';
 
 class App extends Component {
@@ -37,6 +38,16 @@ class App extends Component {
         lat: 34.073851,
         lng: -118.242147
       },
+      {
+        name: 'Stub Hub Center',
+        lat: 33.8643777,
+        lng: -118.2633313
+      },
+      {
+        name: 'Banc of California Stadium',
+        lat: 34.0127625,
+        lng: -118.2867372
+      }
     ]
   }
 
@@ -67,6 +78,7 @@ class App extends Component {
   render() {
     return (
       <main>
+        <LocationList>locations={this.state.markers}</LocationList>
         <Map></Map>
       </main>
     );
