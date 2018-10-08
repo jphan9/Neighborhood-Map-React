@@ -1,17 +1,30 @@
 import React, {Component} from 'react';
 
 class LocationList extends Component {
+  state = {
+    locations: [],
+  }
+
+  componentDidMount() {
+    this.setState({
+      locations: this.props.markers
+    });
+  }
+
   render() {
-    /*
-      {this.props.locations.map((location, i) =>
-        <li key={i}>{location.name}</li>
-      )}
-    */
+    console.log('props', this.props.markers)
     return (
       <div id="location-listing">
-        <h1>Sports Venues</h1>
-        <ul>
+        <header className="header">
+          <h1>Sports Venues</h1>
+        </header>
 
+        <ul className='location-list'>
+          {this.state.locations.map((location) => (
+            <li key={location.name}>
+              <h3 className="location-name">{location.name}</h3>
+            </li>
+          ))}
         </ul>
       </div>
     )
