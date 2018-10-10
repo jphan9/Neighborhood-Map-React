@@ -5,58 +5,68 @@ import LocationList from './LocationList';
 import './App.css';
 
 class App extends Component {
-  state = {
-    markers: [
-      {
-        name: 'Staples Center',
-        lat: 34.0430058,
-        lng: -118.2695484,
-        id: "staples"
-      },
-      {
-        name: 'Los Angeles Memorial Colessium',
-        lat: 34.0140526,
-        lng: -118.2900641,
-        id: "Colessium"
-      },
-      {
-        name: 'Rose Bowl Stadium',
-        lat: 34.1613284,
-        lng: -118.1698349,
-        id: "Rose"
-      },
-      {
-        name: 'Angel Stadium of Anaheim',
-        lat: 33.800308,
-        lng: -117.8849208,
-        id: "Angel"
-      },
-      {
-        name: 'Honda Center',
-        lat: 33.8078476,
-        lng: -117.8786574,
-        id: "Honda"
-      },
-      {
-        name: 'Dodger Stadium',
-        lat: 34.073851,
-        lng: -118.242147,
-        id: "Dodger"
-      },
-      {
-        name: 'Stub Hub Center',
-        lat: 33.8643777,
-        lng: -118.2633313,
-        id: "Stub"
-      },
-      {
-        name: 'Banc of California Stadium',
-        lat: 34.0127625,
-        lng: -118.2867372,
-        id: "Banc"
-      }
-    ]
+  constructor(props) {
+    super(props);
+    this.state = {
+      map: '',
+      venueInfo: '',
+      markerLocations: [],
+      markers: [
+        {
+          name: 'STAPLES Center',
+          lat: 34.0430847,
+          lng: -118.2671909,
+          id: "staples"
+        },
+        {
+          name: 'Los Angeles Memorial Coliseum',
+          lat: 34.0140977,
+          lng: -118.2865869,
+          id: "Colessium"
+        },
+        {
+          name: 'Rose Bowl Stadium',
+          lat: 34.162317861452344,
+          lng: -118.16798852780228,
+          id: "Rose"
+        },
+        {
+          name: 'Angel Stadium of Anaheim',
+          lat: 33.8002813,
+          lng: -117.8832092,
+          id: "Angel"
+        },
+        {
+          name: 'Honda Center',
+          lat: 33.8072745,
+          lng: -117.8770175,
+          id: "Honda"
+        },
+        {
+          name: 'Dodger Stadium',
+          lat: 34.0735138,
+          lng: -118.2404617,
+          id: "Dodger"
+        },
+        {
+          name: 'StubHub Center',
+          lat: 33.8703692,
+          lng: -118.2617806,
+          id: "Stub"
+        },
+        {
+          name: 'Banc of California Stadium',
+          lat: 34.0121511,
+          lng: -118.2845163,
+          id: "Banc"
+        }
+      ]
+    };
+
+    this.initMap = this.initMap.bind(this);
+    this.openInfoWindow = this.openInfoWindow.bind(this);
   }
+
 
   componentDidMount() {
     this.loadMap();
@@ -68,10 +78,20 @@ class App extends Component {
   }
 
   initMap = () => {
+    let self = this;
     var map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 34.0517416, lng: -118.3911628},
       zoom: 10
     });
+
+    var infoWindow = new window.google.maps.InfoWindow({});
+
+    this.setState({
+      venueInfo: infoWindow,
+      map: map
+    });
+
+    var markersLocations = [];
 
     this.state.markers.forEach(markerLocation => {
       var marker = new window.google.maps.Marker({
@@ -80,29 +100,45 @@ class App extends Component {
         title: markerLocation.name
       });
 
-      var infoWindow = new window.google.maps.InfoWindow({
-        content: markerLocation.name
-      });
-
       marker.addListener('click', function() {
-        infoWindow.open(map,marker);
-      });
+        self.openInfoWindow(marker);
+      })
 
-      this.getLocationInfo(marker,markerLocation.name,infoWindow);
+      markersLocations.push(marker);
+
+      this.setState({
+        markerLocations: markersLocations
+      })
     })
+
+
   }
 
-  getLocationInfo(marker,locationName,infoWindow) {
+  openInfoWindow = (marker) => {
+    this.getLocationInfo(marker);
+    this.state.venueInfo.open(this.state.map,marker);
+  }
+
+  getLocationInfo(marker) {
     var clientId = "KI1SKBADGX3VXXYHGOMNNLSMC0I5NXP0KMDLB1J3CUS1DOWJ";
     var clientSecret = "WIBENCT2PDA0RTEP3NSMNPFUHZD4X4R3NQHIGMEX5KTCH51I";
-    var locationPoint = "https://api.foursquare.com/v2/venues/search?client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20181007&ll=" + marker.getPosition().lat() + "," + marker.getPosition().lng() + "&limit=1";
+    var locationPoint = "https://api.foursquare.com/v2/venues/search?client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20181007&ll=" + marker.getPosition().lat() + "," + marker.getPosition().lng() + "&limit=3";
     fetch(locationPoint)
       .then(response => {
         response.json().then(data => {
           var locationCity = data.response.venues[0].location.formattedAddress;
           var locationLat = data.response.venues[0].location.lat;
           var locationLng = data.response.venues[0].location.lng;
-          infoWindow.setContent("Venue Name: " + locationName + "<br>" + "Location: " + locationCity + "<br>" + "Latitude: " + locationLat + "<br>"  + "Longitude: " + locationLng);
+
+          var locationName;
+          if(data.response.venues[0].name === marker.title)
+          {
+            locationName = data.response.venues[0].name;
+          }
+          else
+            locationName = data.response.venues[1].name;
+
+          this.state.venueInfo.setContent("Venue Name: " + locationName + "<br>" + "Location: " + locationCity + "<br>" + "Latitude: " + locationLat + "<br>"  + "Longitude: " + locationLng);
         })
       })
       .catch(error => {
@@ -112,10 +148,10 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.markers)
+    console.log("marker locations: ", this.state.markerLocations);
     return (
       <main>
-        <LocationList markers={this.state.markers}></LocationList>
+        <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow} markers={this.state.markers}></LocationList>
         <Map></Map>
       </main>
     );
