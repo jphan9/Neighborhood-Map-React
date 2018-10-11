@@ -79,6 +79,8 @@ class App extends Component {
 
   initMap = () => {
     let self = this;
+    var markersLocations = this.state.markerLocations;
+
     var map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 34.0517416, lng: -118.3911628},
       zoom: 10
@@ -91,8 +93,6 @@ class App extends Component {
       map: map
     });
 
-    var markersLocations = [];
-
     this.state.markers.forEach(markerLocation => {
       var marker = new window.google.maps.Marker({
         position: {lat:markerLocation.lat, lng: markerLocation.lng},
@@ -104,10 +104,8 @@ class App extends Component {
         self.openInfoWindow(marker);
       })
 
-      markersLocations.push(marker);
-
       this.setState({
-        markerLocations: markersLocations
+        markerLocations: markersLocations.push(marker)
       })
     })
 
@@ -151,7 +149,7 @@ class App extends Component {
     console.log("marker locations: ", this.state.markerLocations);
     return (
       <main>
-        <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow} markers={this.state.markers}></LocationList>
+        <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow}></LocationList>
         <Map></Map>
       </main>
     );

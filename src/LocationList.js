@@ -5,34 +5,30 @@ class LocationList extends Component {
     super(props);
     this.state = {
       locations: [],
-      locationMarkers: []
-    }
+    };
   }
 
   componentDidMount() {
     this.setState({
-      locations: this.props.markers,
-      locationMarkers: this.props.markerLocations
+      locations: this.props.markerLocations
     });
   }
 
-  test() {
-    console.log("test");
-  }
-
   render() {
-    console.log('props markerLocations', this.props.markerLocations)
-    console.log('props locationMarkers', this.state.locationMarkers)
     return (
       <div id="location-listing">
         <header className="header">
           <h1>Sports Venues</h1>
         </header>
 
+        <div>
+          <input type="text"></input>
+        </div>
+
         <ul className='location-list'>
           {this.state.locations.map((location) => (
-            <li key={location.id} onClick={this.props.openInfoWindow.bind(this, this.props.markerLocations[2])}>
-              <h3 className="location-name">{location.name}</h3>
+            <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)}>
+              <h3 className="location-name">{location.title}</h3>
             </li>
           ))}
         </ul>
