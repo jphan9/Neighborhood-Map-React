@@ -72,13 +72,13 @@ class App extends Component {
     this.loadMap();
   }
 
-  loadMap= () => {
+  loadMap = () => {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDxN2DFeH5_jkVStwLZHfXak8jdW9kjCyY&callback=initMap");
     window.initMap = this.initMap;
   }
 
   initMap = () => {
-    let self = this;
+    var self = this;
     var markersLocations = this.state.markerLocations;
 
     var map = new window.google.maps.Map(document.getElementById('map'), {
@@ -97,7 +97,7 @@ class App extends Component {
       var marker = new window.google.maps.Marker({
         position: {lat:markerLocation.lat, lng: markerLocation.lng},
         map: map,
-        title: markerLocation.name
+        title: markerLocation.name,
       });
 
       marker.addListener('click', function() {
@@ -108,16 +108,20 @@ class App extends Component {
         markerLocations: markersLocations.push(marker)
       })
     })
-
-
   }
 
   openInfoWindow = (marker) => {
     this.getLocationInfo(marker);
     this.state.venueInfo.open(this.state.map,marker);
+    marker.setAnimation(window.google.maps.Animation.DROP);
+    // Set the marker animation to null after 5 seconds.
+    setTimeout(() => {
+      marker.setAnimation('null');
+    },500);
   }
 
   getLocationInfo(marker) {
+    this.state.venueInfo.setContent("Loading...");
     var clientId = "KI1SKBADGX3VXXYHGOMNNLSMC0I5NXP0KMDLB1J3CUS1DOWJ";
     var clientSecret = "WIBENCT2PDA0RTEP3NSMNPFUHZD4X4R3NQHIGMEX5KTCH51I";
     var locationPoint = "https://api.foursquare.com/v2/venues/search?client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20181007&ll=" + marker.getPosition().lat() + "," + marker.getPosition().lng() + "&limit=3";

@@ -14,6 +14,21 @@ class LocationList extends Component {
     });
   }
 
+  filter = (event) => {
+    //var locationName = document.getElementsByClassName("location-name");
+    this.state.locations.forEach(function (marker) {
+      if(marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0) {
+        console.log("Test: ", marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()));
+        marker.setVisible(true);
+        //locationName[0].style.display = "block";
+
+      } else {
+        //locationName[0].style.display = "none";
+        marker.setVisible(false);
+      }
+    });
+  }
+
   render() {
     return (
       <div id="location-listing">
@@ -22,7 +37,7 @@ class LocationList extends Component {
         </header>
 
         <div>
-          <input type="text"></input>
+          <input className="search-bar" type="text" placeholder="Type here to filter venues" onChange={this.filter}></input>
         </div>
 
         <ul className='location-list'>
