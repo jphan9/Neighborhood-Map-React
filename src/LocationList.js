@@ -30,6 +30,7 @@ class LocationList extends Component {
     }
 
     this.state.locations.forEach((marker) => {
+      this.props.infoWindow.close();
       if(marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0) {
         marker.setVisible(true);
       } else {
@@ -41,14 +42,12 @@ class LocationList extends Component {
   // Function that shows the location list when the Open Location List button is clicked.
   openLocationList = () => {
     var locationList = document.getElementById('location-listing');
-
     locationList.style.left = '0';
   }
 
   // Function that hides the location list when the closeLocationList Location List button is clicked.
   closeLocationList = () => {
     var locationList = document.getElementById('location-listing');
-
     locationList.style.left = '-500px';
   }
 

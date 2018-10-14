@@ -154,7 +154,7 @@ class App extends Component {
   render() {
     return (
       <main className="main-container">
-        <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow}></LocationList>
+        <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow} infoWindow={this.state.venueInfo}></LocationList>
         <Map></Map>
       </main>
     );

@@ -91,8 +91,25 @@ html, body {
     width: 150px;
     font-size: 12px;
   }
+
   .header {
     font-size: 11px;
+  }
+
+  .open-location-list-button {
+    width: 90px;
+    height: 30px;
+    font-size: 10px;
+  }
+
+  .close-location-list-button {
+    width: 100px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .location-list {
+    padding-left: 3px;
   }
 }
 
@@ -100,10 +117,18 @@ html, body {
   #location-listing {
     width: 240px;
   }
+
+  .location-list {
+    padding-left: 5px;
+  }
 }
 
 @media screen and (min-width: 601px) and (max-width: 900px) {
   #location-listing {
     width: 320px;
+  }
+
+  .location-list {
+    padding-left: 20px;
   }
 }
