@@ -14,22 +14,22 @@ class LocationList extends Component {
     });
   }
 
-  // Function that filters the venue list names and markers when there is a query.
+  // Function that filters the venue list names and markers when there is a query. It also sets the tab index for the list.
   filter = (event) => {
     var locationList = document.querySelector('.location-list');
     var list = locationList.getElementsByTagName('li');
     var locationItem;
-    var l;
+    var listTab;
 
     for (var i = 0; i < list.length; i++) {
         locationItem = list[i].querySelector('.location-name');
-        l = list[i];
+        listTab = list[i];
         if (locationItem.innerHTML.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1) {
             locationItem.style.display = "";
-            l.tabIndex = 0;
+            listTab.tabIndex = 0;
         } else {
             locationItem.style.display = "none";
-            l.tabIndex = -1;
+            listTab.tabIndex = -1;
         }
     }
 
