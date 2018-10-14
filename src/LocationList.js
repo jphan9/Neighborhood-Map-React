@@ -14,16 +14,25 @@ class LocationList extends Component {
     });
   }
 
+  // Function that filters the venue list names and markers when there is a query.
   filter = (event) => {
-    //var locationName = document.getElementsByClassName("location-name");
-    this.state.locations.forEach(function (marker) {
-      if(marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0) {
-        console.log("Test: ", marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()));
-        marker.setVisible(true);
-        //locationName[0].style.display = "block";
+    var locationList = document.querySelector('.location-list');
+    var list = locationList.getElementsByTagName('li');
+    var locationItem;
 
+    for (var i = 0; i < list.length; i++) {
+        locationItem = list[i].querySelector('.location-name');
+        if (locationItem.innerHTML.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1) {
+            locationItem.style.display = "";
+        } else {
+            locationItem.style.display = "none";
+        }
+    }
+
+    this.state.locations.forEach((marker) => {
+      if(marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0) {
+        marker.setVisible(true);
       } else {
-        //locationName[0].style.display = "none";
         marker.setVisible(false);
       }
     });
@@ -42,8 +51,8 @@ class LocationList extends Component {
 
         <ul className='location-list'>
           {this.state.locations.map((location) => (
-            <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)}>
-              <h3 className="location-name">{location.title}</h3>
+            <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} className="location-items">
+              <h3 className='location-name'>{location.title}</h3>
             </li>
           ))}
         </ul>

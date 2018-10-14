@@ -62,11 +62,7 @@ class App extends Component {
         }
       ]
     };
-
-    this.initMap = this.initMap.bind(this);
-    this.openInfoWindow = this.openInfoWindow.bind(this);
   }
-
 
   componentDidMount() {
     this.loadMap();
