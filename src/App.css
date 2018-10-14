@@ -64,9 +64,16 @@ html, body {
   z-index: 1;
 }
 
-#open-location-list-button {
+.open-location-list-button {
   z-index: 1;
   position: fixed;
+  width: 120px;
+  height: 40px;
+}
+
+.close-location-list-button {
+  width: 120px;
+  height: 40px;
 }
 
 .search-bar {

@@ -90,6 +90,7 @@ class App extends Component {
       map: map
     });
 
+    // Add markers to the map based on the locations.
     this.state.markers.forEach(markerLocation => {
       var marker = new window.google.maps.Marker({
         position: {lat:markerLocation.lat, lng: markerLocation.lng},
@@ -97,6 +98,7 @@ class App extends Component {
         title: markerLocation.name,
       });
 
+      // Opens the info window when a marker is clicked.
       marker.addListener('click', function() {
         self.openInfoWindow(marker);
       })
@@ -107,6 +109,7 @@ class App extends Component {
     })
   }
 
+  // Function that opens the info window and shows the details of venue location while setting the animation of the marker.
   openInfoWindow = (marker) => {
     this.getLocationInfo(marker);
     this.state.venueInfo.open(this.state.map,marker);
@@ -117,6 +120,7 @@ class App extends Component {
     },500);
   }
 
+  // Function that gets details of the venue location using the foursquare api.
   getLocationInfo(marker) {
     this.state.venueInfo.setContent("Loading...");
     var clientId = "KI1SKBADGX3VXXYHGOMNNLSMC0I5NXP0KMDLB1J3CUS1DOWJ";
@@ -128,8 +132,8 @@ class App extends Component {
           var locationCity = data.response.venues[0].location.formattedAddress;
           var locationLat = data.response.venues[0].location.lat;
           var locationLng = data.response.venues[0].location.lng;
-
           var locationName;
+          // If the name of the four square venue is the same as the name of the location then set the name of the location.
           if(data.response.venues[0].name === marker.title)
           {
             locationName = data.response.venues[0].name;
@@ -142,12 +146,12 @@ class App extends Component {
       })
       .catch(error => {
         console.log("Error! " + error);
+        this.state.venueInfo.setContent("ERROR: Data cannot be loaded.");
       })
   }
 
 
   render() {
-    console.log("marker locations: ", this.state.markerLocations);
     return (
       <main className="main-container">
         <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow}></LocationList>
@@ -157,6 +161,7 @@ class App extends Component {
   }
 }
 
+// Loads google maps.
 function loadScript(url) {
   var tag = window.document.getElementsByTagName("script")[0];
   var script = window.document.createElement("script");

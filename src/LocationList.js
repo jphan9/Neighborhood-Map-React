@@ -38,12 +38,14 @@ class LocationList extends Component {
     });
   }
 
+  // Function that shows the location list when the Open Location List button is clicked.
   openLocationList = () => {
     var locationList = document.getElementById('location-listing');
 
     locationList.style.left = '0';
   }
 
+  // Function that hides the location list when the closeLocationList Location List button is clicked.
   closeLocationList = () => {
     var locationList = document.getElementById('location-listing');
 
@@ -53,21 +55,21 @@ class LocationList extends Component {
   render() {
     return (
       <div>
-        <button id="open-location-list-button" onClick={this.openLocationList}>Open Venue List</button>
+        <button className="open-location-list-button" role="button" onClick={this.openLocationList}>Open Venue List</button>
 
         <div id="location-listing">
-          <button id="close-location-list-button" onClick={this.closeLocationList}>Close Venue List</button>
+          <button className="close-location-list-button" role="button" onClick={this.closeLocationList}>Close Venue List</button>
           <header className="header">
             <h1>Sports Venues</h1>
           </header>
 
           <div>
-            <input className="search-bar" type="text" placeholder="Type here to filter venues" onChange={this.filter}></input>
+            <input className="search-bar" role="search" type="text" placeholder="Type here to filter venues" onChange={this.filter}></input>
           </div>
 
           <ul className='location-list'>
             {this.state.locations.map((location) => (
-              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} className="location-items">
+              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} className="location-items" role="button">
                 <h3 className='location-name'>{location.title}</h3>
               </li>
             ))}
