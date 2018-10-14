@@ -31,12 +31,21 @@
   }
 }
 
-#map {
-  height: 100vh;
-  left: 362px;
+.main-container {
+  display: flex;
 }
+
+#map {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -44,13 +53,20 @@ html, body {
 #location-listing {
   background: black;
   color: white;
+  height: 100%;
   border: 1px solid #999;
   border-radius: 3px;
-  height: 100%;
   padding: 10px 10px 30px;
   text-align: left;
   width: 340px;
-  position: absolute;
+  position: fixed;
+  left: -500px;
+  z-index: 1;
+}
+
+#open-location-list-button {
+  z-index: 1;
+  position: fixed;
 }
 
 .search-bar {
@@ -61,4 +77,26 @@ html, body {
 .location-items {
   list-style-type: none;
   cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+  #location-listing {
+    width: 150px;
+    font-size: 12px;
+  }
+  .header {
+    font-size: 11px;
+  }
+}
+
+@media screen and (min-width: 401px) and (max-width: 600px) {
+  #location-listing {
+    width: 240px;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  #location-listing {
+    width: 320px;
+  }
 }

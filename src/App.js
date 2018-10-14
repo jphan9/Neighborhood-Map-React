@@ -78,6 +78,7 @@ class App extends Component {
     var markersLocations = this.state.markerLocations;
 
     var map = new window.google.maps.Map(document.getElementById('map'), {
+      mapTypeControl: false,
       center: {lat: 34.0517416, lng: -118.3911628},
       zoom: 10
     });
@@ -148,7 +149,7 @@ class App extends Component {
   render() {
     console.log("marker locations: ", this.state.markerLocations);
     return (
-      <main>
+      <main className="main-container">
         <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow}></LocationList>
         <Map></Map>
       </main>
