@@ -19,13 +19,17 @@ class LocationList extends Component {
     var locationList = document.querySelector('.location-list');
     var list = locationList.getElementsByTagName('li');
     var locationItem;
+    var l;
 
     for (var i = 0; i < list.length; i++) {
         locationItem = list[i].querySelector('.location-name');
+        l = list[i];
         if (locationItem.innerHTML.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1) {
             locationItem.style.display = "";
+            l.tabIndex = 0;
         } else {
             locationItem.style.display = "none";
+            l.tabIndex = -1;
         }
     }
 
@@ -43,12 +47,14 @@ class LocationList extends Component {
   openLocationList = () => {
     var locationList = document.getElementById('location-listing');
     locationList.style.left = '0';
+    locationList.style.visibility = "visible";
   }
 
   // Function that hides the location list when the closeLocationList Location List button is clicked.
   closeLocationList = () => {
     var locationList = document.getElementById('location-listing');
     locationList.style.left = '-500px';
+    locationList.style.visibility = "hidden";
   }
 
   render() {
@@ -63,12 +69,12 @@ class LocationList extends Component {
           </header>
 
           <div>
-            <input className="search-bar" role="search" type="text" placeholder="Type here to filter venues" onChange={this.filter}></input>
+            <input className="search-bar" role="search" aria-label="search filter" type="text" placeholder="Type here to filter venues" onChange={this.filter}></input>
           </div>
 
           <ul className='location-list'>
             {this.state.locations.map((location) => (
-              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} className="location-items" role="button">
+              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} className="location-items" role="button" tabIndex="0">
                 <h3 className='location-name'>{location.title}</h3>
               </li>
             ))}
