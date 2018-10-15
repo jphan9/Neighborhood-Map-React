@@ -74,7 +74,7 @@ class LocationList extends Component {
 
           <ul className='location-list'>
             {this.state.locations.map((location) => (
-              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} className="location-items" role="button" tabIndex="0">
+              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} onKeyPress={this.props.openInfoWindow.bind(this, location)} className="location-items" role="button" tabIndex="0">
                 <h3 className='location-name'>{location.title}</h3>
               </li>
             ))}
