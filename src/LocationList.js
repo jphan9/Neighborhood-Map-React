@@ -50,7 +50,7 @@ class LocationList extends Component {
     locationList.style.visibility = "visible";
   }
 
-  // Function that hides the location list when the closeLocationList Location List button is clicked.
+  // Function that hides the location list when the Close Location List button is clicked.
   closeLocationList = () => {
     var locationList = document.getElementById('location-listing');
     locationList.style.left = '-500px';
