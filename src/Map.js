@@ -4,9 +4,9 @@ class Map extends Component {
   render() {
     return (
       <div>
-        <div id="map" role="application" aria-label="locations of sports venues"></div>
+        <div id='map' role='application' aria-label='locations of sports venues'></div>
       </div>
-    )
+    );
   }
 }
 

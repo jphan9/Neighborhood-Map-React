@@ -26,10 +26,10 @@ class LocationList extends Component {
         locationItem = list[i].querySelector('.location-name');
         listTab = list[i];
         if (locationItem.innerHTML.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1) {
-            locationItem.style.display = "";
+            locationItem.style.display = '';
             listTab.tabIndex = 0;
         } else {
-            locationItem.style.display = "none";
+            locationItem.style.display = 'none';
             listTab.tabIndex = -1;
         }
     }
@@ -50,41 +50,41 @@ class LocationList extends Component {
   openLocationList = () => {
     var locationList = document.getElementById('location-listing');
     locationList.style.left = '0';
-    locationList.style.visibility = "visible";
+    locationList.style.visibility = 'visible';
   }
 
   // Function that hides the location list when the Close Location List button is clicked.
   closeLocationList = () => {
     var locationList = document.getElementById('location-listing');
     locationList.style.left = '-500px';
-    locationList.style.visibility = "hidden";
+    locationList.style.visibility = 'hidden';
   }
 
   render() {
     return (
       <div>
-        <button className="open-location-list-button" role="button" onClick={this.openLocationList}>Open Venue List</button>
+        <button className='open-location-list-button' role='button' onClick={this.openLocationList}>Open Venue List</button>
 
-        <div id="location-listing">
-          <button className="close-location-list-button" role="button" onClick={this.closeLocationList}>Close Venue List</button>
-          <header className="header">
-            <h1 aria-Label="side bar title" tabIndex="0">Sports Venues</h1>
+        <div id='location-listing'>
+          <button className='close-location-list-button' role='button' onClick={this.closeLocationList}>Close Venue List</button>
+          <header className='header'>
+            <h1 aria-label='side bar title' tabIndex='0'>Sports Venues</h1>
           </header>
 
           <div>
-            <input className="search-bar" role="search" aria-label="search filter" type="text" placeholder="Type here to filter venues" onChange={this.filter}></input>
+            <input className='search-bar' role='search' aria-label='search filter' type='text' placeholder='Type here to filter venues' onChange={this.filter}></input>
           </div>
 
           <ul className='location-list'>
             {this.state.locations.map((location) => (
-              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} onKeyPress={this.props.openInfoWindow.bind(this, location)} className="location-items" role="button" tabIndex="0">
+              <li key={location.title} onClick={this.props.openInfoWindow.bind(this, location)} onKeyPress={this.props.openInfoWindow.bind(this, location)} className='location-items' role='button' tabIndex='0'>
                 <h3 className='location-name'>{location.title}</h3>
               </li>
             ))}
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 

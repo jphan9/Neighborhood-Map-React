@@ -15,49 +15,49 @@ class App extends Component {
           name: 'STAPLES Center',
           lat: 34.0430847,
           lng: -118.2671909,
-          id: "staples"
+          id: 'staples'
         },
         {
           name: 'Los Angeles Memorial Coliseum',
           lat: 34.0140977,
           lng: -118.2865869,
-          id: "Colessium"
+          id: 'Colessium'
         },
         {
           name: 'Rose Bowl Stadium',
           lat: 34.162317861452344,
           lng: -118.16798852780228,
-          id: "Rose"
+          id: 'Rose'
         },
         {
           name: 'Angel Stadium of Anaheim',
           lat: 33.8002813,
           lng: -117.8832092,
-          id: "Angel"
+          id: 'Angel'
         },
         {
           name: 'Honda Center',
           lat: 33.8072745,
           lng: -117.8770175,
-          id: "Honda"
+          id: 'Honda'
         },
         {
           name: 'Dodger Stadium',
           lat: 34.0735138,
           lng: -118.2404617,
-          id: "Dodger"
+          id: 'Dodger'
         },
         {
           name: 'StubHub Center',
           lat: 33.8703692,
           lng: -118.2617806,
-          id: "Stub"
+          id: 'Stub'
         },
         {
           name: 'Banc of California Stadium',
           lat: 34.0121511,
           lng: -118.2845163,
-          id: "Banc"
+          id: 'Banc'
         }
       ]
     };
@@ -68,7 +68,7 @@ class App extends Component {
   }
 
   loadMap = () => {
-    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDxN2DFeH5_jkVStwLZHfXak8jdW9kjCyY&callback=initMap");
+    loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyDxN2DFeH5_jkVStwLZHfXak8jdW9kjCyY&callback=initMap');
     window.initMap = this.initMap;
   }
 
@@ -102,12 +102,12 @@ class App extends Component {
       // Opens the associated info window when a marker is clicked.
       marker.addListener('click', function() {
         self.openInfoWindow(marker);
-      })
+      });
 
       this.setState({
         markerLocations: markersLocations.push(marker)
-      })
-    })
+      });
+    });
   }
 
   // Function that opens the info window and shows the details of venue location while setting the animation of the marker.
@@ -123,32 +123,35 @@ class App extends Component {
 
   // Function that gets details of the venue location using the foursquare api.
   getLocationInfo(marker) {
-    this.state.venueInfo.setContent("Loading...");
-    var clientId = "KI1SKBADGX3VXXYHGOMNNLSMC0I5NXP0KMDLB1J3CUS1DOWJ";
-    var clientSecret = "WIBENCT2PDA0RTEP3NSMNPFUHZD4X4R3NQHIGMEX5KTCH51I";
-    var locationPoint = "https://api.foursquare.com/v2/venues/search?client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20181007&ll=" + marker.getPosition().lat() + "," + marker.getPosition().lng() + "&limit=3";
+    this.state.venueInfo.setContent('Loading...');
+    var clientId = 'KI1SKBADGX3VXXYHGOMNNLSMC0I5NXP0KMDLB1J3CUS1DOWJ';
+    var clientSecret = 'WIBENCT2PDA0RTEP3NSMNPFUHZD4X4R3NQHIGMEX5KTCH51I';
+    var locationPoint = 'https://api.foursquare.com/v2/venues/search?client_id=' + clientId + '&client_secret=' + clientSecret + '&v=20181007&ll=' + marker.getPosition().lat() + ',' + marker.getPosition().lng() + '&limit=3';
     fetch(locationPoint)
       .then(response => {
         response.json().then(data => {
-          var locationCity = data.response.venues[0].location.formattedAddress;
-          var locationLat = data.response.venues[0].location.lat;
-          var locationLng = data.response.venues[0].location.lng;
-          var locationName;
-          // If the name of the four square venue is the same as the name of the location then set the name of the location.
-          if(data.response.venues[0].name === marker.title)
-          {
-            locationName = data.response.venues[0].name;
-          }
-          else
-            locationName = data.response.venues[1].name;
+          var locationCity, locationLat, locationLng, locationName;
 
-          this.state.venueInfo.setContent("Venue Name: " + locationName + "<br> Location: " + locationCity + "<br> Latitude: " + locationLat + "<br> Longitude: " + locationLng);
-        })
+          // If the name of the four square venue is the same as the name of the location then set the correct foursquare venue information.
+          if(data.response.venues[0].name === marker.title) {
+            locationName = data.response.venues[0].name;
+            locationCity = data.response.venues[0].location.formattedAddress;
+            locationLat = data.response.venues[0].location.lat;
+            locationLng = data.response.venues[0].location.lng;
+          } else {
+            locationName = data.response.venues[1].name;
+            locationCity = data.response.venues[1].location.formattedAddress;
+            locationLat = data.response.venues[1].location.lat;
+            locationLng = data.response.venues[1].location.lng;
+          }
+
+          this.state.venueInfo.setContent('Venue Name: ' + locationName + '<br> Location: ' + locationCity + '<br> Latitude: ' + locationLat + '<br> Longitude: ' + locationLng);
+        });
       })
       .catch(error => {
-        console.log("Error! " + error);
-        this.state.venueInfo.setContent("ERROR: Data cannot be loaded.");
-      })
+        console.log('Error! ' + error);
+        this.state.venueInfo.setContent('ERROR: Data cannot be loaded.');
+      });
   }
 
   render() {
@@ -167,15 +170,15 @@ This function is based off of a tutorial of how to add Google Maps to React with
 I have slightly modified it to show an error message when Google Maps cannot load.
 */
 function loadScript(url) {
-  var tag = window.document.getElementsByTagName("script")[0];
-  var script = window.document.createElement("script");
+  var tag = window.document.getElementsByTagName('script')[0];
+  var script = window.document.createElement('script');
 
   script.src = url;
   script.async = true;
   script.defer = true;
 
   script.onerror = function() {
-    document.write("Google Maps cannot be loaded.");
+    document.write('Google Maps cannot be loaded.');
   }
 
   tag.parentNode.insertBefore(script,tag);
