@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Map from './Map';
 import LocationList from './LocationList';
 import './App.css';
@@ -141,7 +140,7 @@ class App extends Component {
           else
             locationName = data.response.venues[1].name;
 
-          this.state.venueInfo.setContent("Venue Name: " + locationName + "<br>" + "Location: " + locationCity + "<br>" + "Latitude: " + locationLat + "<br>"  + "Longitude: " + locationLng);
+          this.state.venueInfo.setContent("Venue Name: " + locationName + "<br> Location: " + locationCity + "<br> Latitude: " + locationLat + "<br> Longitude: " + locationLng);
         })
       })
       .catch(error => {
@@ -149,7 +148,6 @@ class App extends Component {
         this.state.venueInfo.setContent("ERROR: Data cannot be loaded.");
       })
   }
-
 
   render() {
     return (
