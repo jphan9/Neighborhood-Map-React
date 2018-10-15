@@ -21,6 +21,7 @@ class LocationList extends Component {
     var locationItem;
     var listTab;
 
+    // Loops through the list items and if the text matches in the filter display only the ones that match while hiding/disabling tabbing when it does not match.
     for (var i = 0; i < list.length; i++) {
         locationItem = list[i].querySelector('.location-name');
         listTab = list[i];
@@ -33,6 +34,8 @@ class LocationList extends Component {
         }
     }
 
+    // loops through each locaiton and sets the marker to visible if the text matches in the filter.
+    // Sets the markers to not be visisble if thee text does not match in the filter and also closes the info window when the filter is being used.
     this.state.locations.forEach((marker) => {
       this.props.infoWindow.close();
       if(marker.title.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0) {
@@ -65,7 +68,7 @@ class LocationList extends Component {
         <div id="location-listing">
           <button className="close-location-list-button" role="button" onClick={this.closeLocationList}>Close Venue List</button>
           <header className="header">
-            <h1>Sports Venues</h1>
+            <h1 aria-Label="side bar title" tabIndex="0">Sports Venues</h1>
           </header>
 
           <div>

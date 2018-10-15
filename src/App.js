@@ -76,6 +76,8 @@ class App extends Component {
     var self = this;
     var markersLocations = this.state.markerLocations;
 
+    // Creates a new map instance with the zoom and the lat long of the location that is centered. It is centered near the Walt Disney Concert Hall in Los Angeles California.
+    // Also hides the map/satellite option.
     var map = new window.google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
       center: {lat: 34.0517416, lng: -118.3911628},
@@ -89,7 +91,7 @@ class App extends Component {
       map: map
     });
 
-    // Add markers to the map based on the locations.
+    // Creates a new marker instance for each location and adds the markers to the map based on the locations.
     this.state.markers.forEach(markerLocation => {
       var marker = new window.google.maps.Marker({
         position: {lat:markerLocation.lat, lng: markerLocation.lng},
@@ -97,7 +99,7 @@ class App extends Component {
         title: markerLocation.name,
       });
 
-      // Opens the info window when a marker is clicked.
+      // Opens the associated info window when a marker is clicked.
       marker.addListener('click', function() {
         self.openInfoWindow(marker);
       })
@@ -151,7 +153,7 @@ class App extends Component {
 
   render() {
     return (
-      <main className="main-container">
+      <main>
         <LocationList markerLocations={this.state.markerLocations} openInfoWindow={this.openInfoWindow} infoWindow={this.state.venueInfo}></LocationList>
         <Map></Map>
       </main>
@@ -159,7 +161,11 @@ class App extends Component {
   }
 }
 
-// Loads google maps.
+/*
+Function that creates a script that loads google maps on the app.
+This function is based off of a tutorial of how to add Google Maps to React without any external components on Youtube (https://youtu.be/W5LhLZqj76s?t=472).
+I have slightly modified it to show an error message when Google Maps cannot load.
+*/
 function loadScript(url) {
   var tag = window.document.getElementsByTagName("script")[0];
   var script = window.document.createElement("script");
